@@ -115,6 +115,8 @@ for (var i = 0; i < value.length; i++) {
 
 var $balanceField = $('#bankBalance').append("$" + balance);
 
+//declare deal function.  Loops through and shuffles Deck
+//Pushes into separate shuffled pile
 var deal = function deal() {
 
     for (var i = 0; i < cards.length; i++) {
@@ -123,7 +125,7 @@ var deal = function deal() {
         compShuffled.push(shuffledDeck);
     }
 
-
+//Declaring variables to add up card value amount
     console.log(shuffledDeck)
     var $playerHandDiv = $('#playerHand')
     var initialTotal = userShuffled[18].value + userShuffled[2].value;
@@ -146,12 +148,14 @@ var deal = function deal() {
     var losses = 0;
     var tie = 0;
     var playerWin;
+    //Append new amount of bankroll balance based on outcome of Hand
     var bankRollDifference = function bankRollDifference() {
         console.log("is the bankroll balance running?")
         var $betInput = parseInt($('#bet').val());
         var difference = balance - $betInput;
         var addition = balance + $betInput;
         if (playerWin === true) {
+        	
             $balanceField = $('#bankBalance').append("$" + addition);
 
         } else if (playerWin === false) {
@@ -159,7 +163,8 @@ var deal = function deal() {
         }
 
     }
-
+//Game Logic for Dealing of Cards
+//If amount gets bigger than 21.  JS Alert for busted!
     if (userHand.length === 0) {
         var $playerHandImgOne = $('<img id="imgBoxOne">').appendTo($playerHandDiv);
         var $playerHandImgTwo = $('<img id="imgBoxTwo">').appendTo($playerHandDiv);
@@ -193,7 +198,7 @@ var deal = function deal() {
         userHand.push(userShuffled[4].img)
         if (thirdTotal > 21) {
             console.log("you busted!");
-            console.log(dealerWins);
+            console.log(losses);
             alert("You busted!");
             losses++
             console.log(losses)
@@ -206,7 +211,7 @@ var deal = function deal() {
         userHand.push(userShuffled[4].img);
     }
     bankRollDifference();
-
+//Event listener for Stand Logic after Player is done Hitting
     $('#Stand').on('click', function() {
 
         console.log("is dealer firing?");
@@ -217,7 +222,7 @@ var deal = function deal() {
         //function to compare value of dealer hands and user hands.  Return true or false for Playerwin
         //Also adds to the win or loss count for the player
         var compareHand = function compareHand() {
-            if (secondDealerTotal > secondTotal || secondDealerTotal > thirdTotal && secondDealerTotal < 21) {
+            if (secondDealerTotal > secondTotal && secondDealerTotal > thirdTotal && secondDealerTotal < 21) {
                 alert("Dealer Wins!");
                 console.log("HELLO")
                 losses++
@@ -280,6 +285,7 @@ var deal = function deal() {
 
             bankRollDifference();
         }
+        //Dealer Hand Logic for Dealing of Cards.  Will Get Dealt Until it is 17 At least
         if (compHand.length === 0) {
             var $computerHandDiv = $('#compHand')
             var $computerHandImgOne = $('<img>').appendTo($computerHandDiv);
@@ -306,7 +312,14 @@ var deal = function deal() {
             compareHand();
         }
         $('#new').on('click',function(){
-        	location.reload()
+        	var userShuffled=[];
+        	var compShuffled=[];
+        })
+
+
+        //Reloads Page when user hits new Hand
+        $('#restart').on('click',function(){
+        	location.reload()	
         })
 
     })
@@ -318,17 +331,14 @@ var deal = function deal() {
 
 
 
-//Event Listener for the hit Button
 
 
 
 
 
-// var displayCards = function displayCards(){
 
 
 
-// }
 
 console.log("hello cat");
 $('#hit').click(deal);
