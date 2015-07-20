@@ -1,5 +1,3 @@
-
-
 //Define Global variables
 console.log("This is linked!");
 
@@ -88,13 +86,13 @@ var grabInput = function grabInput() {
         if (parseInt(input) > 1000) {
             alert("you don't have that much monies")
         } else {
-        	$('#betamount').empty();
+            $('#betamount').empty();
             $('#betamount').append("$" + input);
             return input
         }
 
     }
-//Create a card Constructor that creates 52 unique cards
+    //Create a card Constructor that creates 52 unique cards
 
 var Card = function Card(value, img, id) {
     this.value = value;
@@ -259,7 +257,7 @@ var deal = function deal() {
                     tie++
                     console.log(tie);
                 } else if (secondTotal === secondDealerTotal) {
-                	alert("It's a tie!")
+                    alert("It's a tie!")
                     tie++
                     console.log(tie);
                 } else if ((secondTotal > secondDealerTotal) && secondTotal > thirdDealerTotal) {
@@ -299,22 +297,22 @@ var deal = function deal() {
                     alert("Dealer wins!")
                     losses++
                     console.log(losses)
-                } else if (initialTotal===initialDealerTotal){
-                	alert("It's a tie!")
-                	tie++
-                	console.log(tie)
-                } else if (secondTotal>secondDealerTotal){
-                	alert("Player Wins!")
-                	wins++
-                	console.log(wins)
-                } else if (initialTotal>initialDealerTotal){
-                	alert("Player Wins!")
-                	wins++
-                	console.log(wins)
-                } else if (secondTotal===initialDealerTotal){
-                	alert("It's a tie!")
-                	tie++
-                	console.log(tie)
+                } else if (secondTotal > secondDealerTotal) {
+                    alert("Player Wins!")
+                    wins++
+                    console.log(wins)
+                } else if (initialTotal === initialDealerTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie)
+                } else if (initialTotal > initialDealerTotal) {
+                    alert("Player Wins!")
+                    wins++
+                    console.log(wins)
+                } else if (secondTotal === initialDealerTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie)
                 }
 
                 bankRollDifference();
@@ -357,7 +355,7 @@ var deal = function deal() {
 
         })
 
-        
+
 
         //Reloads Page when user hits new Hand
         $('#restart').on('click', function() {
