@@ -245,12 +245,13 @@ var deal = function deal() {
                 if (secondDealerTotal > secondTotal && secondDealerTotal > thirdTotal && secondDealerTotal < 21) {
                     alert("Dealer Wins!");
                     console.log("HELLO")
-                } else if (initialTotal < initialDealerTotal && initialDealerTotal < 21) {
+                } else if (initialTotal < initialDealerTotal && thirdDealerTotal < 21) {
                     alert("Dealer Wins!")
                     losses++
                     console.log(losses);
                 } else if (initialTotal < initialDealerTotal) {
                     losses++
+                    alert("You Lose!")
                     console.log(losses);
                     playerWin = false;
                 } else if (initialTotal > secondDealerTotal && initialTotal > thirdDealerTotal) {
@@ -258,7 +259,7 @@ var deal = function deal() {
                     wins++
                     console.log(wins)
                     playerWin = true;
-                } else if ((initialTotal > initialDealerTotal) && (initialTotal > secondDealerTotal)) {
+                } else if (initialTotal > initialDealerTotal && initialTotal > secondDealerTotal) {
                     alert("Player Wins");
                     wins++
                     console.log(wins)
@@ -267,7 +268,9 @@ var deal = function deal() {
                     tie++
                     console.log(tie);
                 } else if (secondTotal === secondDealerTotal) {
-                    playerWin = true;
+                	alert("It's a tie!")
+                    tie++
+                    console.log(tie);
                 } else if ((secondTotal > secondDealerTotal) && secondTotal > thirdDealerTotal) {
                     alert("Player Wins")
                     wins++
@@ -278,9 +281,7 @@ var deal = function deal() {
                     losses++
                     console.log(losses)
                     playerWin = false;
-                    alert("It's a Tie!")
-                    tie++
-                    console.log(tie);
+
                 } else if (secondDealerTotal > initialTotal && secondDealerTotal < 21) {
                     alert("Dealer Wins")
                     losses++
@@ -289,14 +290,8 @@ var deal = function deal() {
                     alert("It's a tie!")
                     tie++
                     console.log(tie);
-                    alert("Dealer Wins!")
-                    losses++
-                    console.log(losses);
+
                 } else if (secondTotal === initialDealerTotal) {
-                    alert("It's a tie!")
-                    tie++
-                    console.log(tie);
-                } else if (initialTotal === secondDealerTotal) {
                     alert("It's a tie!")
                     tie++
                     console.log(tie);
@@ -313,6 +308,22 @@ var deal = function deal() {
                     alert("Dealer wins!")
                     losses++
                     console.log(losses)
+                } else if (initialTotal===initialDealerTotal){
+                	alert("It's a tie!")
+                	tie++
+                	console.log(tie)
+                } else if (secondTotal>secondDealerTotal){
+                	alert("Player Wins!")
+                	wins++
+                	console.log(wins)
+                } else if (initialTotal>initialDealerTotal){
+                	alert("Player Wins!")
+                	wins++
+                	console.log(wins)
+                } else if (secondTotal===initialDealerTotal){
+                	alert("It's a tie!")
+                	tie++
+                	console.log(tie)
                 }
 
                 bankRollDifference();
@@ -357,11 +368,11 @@ var deal = function deal() {
 
         })
         var displayer = function displayer() {
-
+        	$('#win-display').empty()
             $winDisplayer = $('#win-Display').append(wins);
 
         }
-        displayer();
+        
 
         //Reloads Page when user hits new Hand
         $('#restart').on('click', function() {

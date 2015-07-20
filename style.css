@@ -49,6 +49,16 @@ button:active {
 	top:1px;
 }
 
+div {
+	border: 50;
+	margin: 20px;
+	color: white;
+}
+
+input {
+	height: 100%;
+}
+
         
 	 
 
