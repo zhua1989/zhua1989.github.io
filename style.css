@@ -53,12 +53,23 @@ div {
 	border: 50;
 	margin: 20px;
 	color: white;
+
 }
 
 input {
 	height: 100%;
 }
 
-        
+     
+
+h1 {
+  font-family: sans-serif;
+  color: cornsilk;
+}
+
+h2 {
+	font-family: sans-serif;
+	color: cornsilk;
+}
 	 
 

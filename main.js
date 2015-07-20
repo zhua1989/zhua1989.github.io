@@ -1,3 +1,5 @@
+
+
 //Define Global variables
 console.log("This is linked!");
 
@@ -66,13 +68,13 @@ var img = ["PNG-cards-1.3/2_of_clubs.png",
     "PNG-cards-1.3/queen_of_spades.png",
 ];
 
-//Create array of cards the different cards you have.  It is an array of objects for each card.
-//Used forloop to push it into this array
+
 
 var cards = [];
 
 
-
+//Bet button Event Listener.  Calls on grabInput funciton which gets the input value.
+//If number is greater than 1000 ignores the bet and alerts the user.
 $('#betButton').on('click', function() {
     console.log("is bet button working?")
     var userInput = grabInput();
@@ -92,7 +94,7 @@ var grabInput = function grabInput() {
         }
 
     }
-    //Create a card Constructor that creates 52 unique cards
+//Create a card Constructor that creates 52 unique cards
 
 var Card = function Card(value, img, id) {
     this.value = value;
@@ -133,17 +135,6 @@ var deal = function deal() {
     var secondTotal = initialTotal + userShuffled[20].value
     var thirdTotal = secondTotal + userShuffled[4].value
 
-    // var acevalue = function acevalue(){
-
-    // 		if (userShuffled[18].value ===11){
-    // 			userShuffled[18].value =1
-    // 		} else if (userShuffled[20].value === 11){
-    // 			userShuffled[20].value=1
-    // 		} else if (userShuffled[4].value===11){
-    // 			userShuffled[4].value=1
-    // 		}
-
-    // }
 
     var wins = 0;
     var losses = 0;
@@ -359,19 +350,13 @@ var deal = function deal() {
             console.log("new hand?")
             $playerHandDiv.empty();
             $computerHandDiv.empty();
-            // var inputValue = $betInput.val()
-            // inputValue=""
             userHand = [];
             compHand = [];
             userShuffled.length = 0
             compShuffled.length = 0
 
         })
-        var displayer = function displayer() {
-        	$('#win-display').empty()
-            $winDisplayer = $('#win-Display').append(wins);
 
-        }
         
 
         //Reloads Page when user hits new Hand
