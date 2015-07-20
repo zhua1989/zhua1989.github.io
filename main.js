@@ -86,6 +86,7 @@ var grabInput = function grabInput() {
         if (parseInt(input) > 1000) {
             alert("you don't have that much monies")
         } else {
+        	$('#betamount').empty();
             $('#betamount').append("$" + input);
             return input
         }
@@ -125,7 +126,7 @@ var deal = function deal() {
         compShuffled.push(shuffledDeck);
     }
 
-//Declaring variables to add up card value amount
+    //Declaring variables to add up card value amount
     console.log(shuffledDeck)
     var $playerHandDiv = $('#playerHand')
     var initialTotal = userShuffled[18].value + userShuffled[2].value;
@@ -148,23 +149,27 @@ var deal = function deal() {
     var losses = 0;
     var tie = 0;
     var playerWin;
+    var $computerHandDiv = $('#compHand')
+    var $betInput = $('#bet');
+
     //Append new amount of bankroll balance based on outcome of Hand
     var bankRollDifference = function bankRollDifference() {
-        console.log("is the bankroll balance running?")
-        var $betInput = parseInt($('#bet').val());
-        var difference = balance - $betInput;
-        var addition = balance + $betInput;
-        if (playerWin === true) {
-        	
-            $balanceField = $('#bankBalance').append("$" + addition);
+            console.log("is the bankroll balance running?")
+            var $betInput = parseInt($('#bet').val());
+            var difference = balance - $betInput;
+            var addition = balance + $betInput;
+            if (playerWin === true) {
+                $balanceField.empty();
+                $balanceField = $('#bankBalance').append("$" + addition);
 
-        } else if (playerWin === false) {
-            $balanceField = $('#bankBalance').append("$" + difference);
+            } else if (playerWin === false) {
+                $balanceField.empty();
+                $balanceField = $('#bankBalance').append("$" + difference);
+            }
+
         }
-
-    }
-//Game Logic for Dealing of Cards
-//If amount gets bigger than 21.  JS Alert for busted!
+        //Game Logic for Dealing of Cards
+        //If amount gets bigger than 21.  JS Alert for busted!
     if (userHand.length === 0) {
         var $playerHandImgOne = $('<img id="imgBoxOne">').appendTo($playerHandDiv);
         var $playerHandImgTwo = $('<img id="imgBoxTwo">').appendTo($playerHandDiv);
@@ -211,7 +216,22 @@ var deal = function deal() {
         userHand.push(userShuffled[4].img);
     }
     bankRollDifference();
-//Event listener for Stand Logic after Player is done Hitting
+    $('#restart').on('click', function() {
+        location.reload()
+    })
+    $('#new').on('click', function() {
+        $playerHandDiv.empty();
+        $computerHandDiv.empty();
+        // var inputValue = $betInput.val()
+        // inputValue=""
+        userHand = [];
+        compeHand = [];
+        userShuffled.length = 0
+        compShuffled.length = 0
+
+    })
+
+    //Event listener for Stand Logic after Player is done Hitting
     $('#Stand').on('click', function() {
 
         console.log("is dealer firing?");
@@ -222,70 +242,82 @@ var deal = function deal() {
         //function to compare value of dealer hands and user hands.  Return true or false for Playerwin
         //Also adds to the win or loss count for the player
         var compareHand = function compareHand() {
-            if (secondDealerTotal > secondTotal && secondDealerTotal > thirdTotal && secondDealerTotal < 21) {
-                alert("Dealer Wins!");
-                console.log("HELLO")
-                losses++
-                console.log(losses);
-                playerWin = false;
-            } else if (initialTotal > secondDealerTotal && initialTotal > thirdDealerTotal) {
-                alert("Player Wins");
-                wins++
-                console.log(wins)
-                playerWin = true;
-            } else if (initialTotal > initialDealerTotal && initialTotal > secondDealerTotal) {
-                alert("Player Wins");
-                wins++
-                console.log(wins)
-                playerWin = true;
-            } else if (secondTotal > secondDealerTotal) {
-                alert("Player Wins")
-                wins++
-                console.log(wins)
-                playerWin = true;
-            } else if (thirdDealerTotal > 21) {
-                alert("Player Wins")
-                wins++
-                console.log(wins)
-                playerWin = true;
-            } else if (thirdDealerTotal < 21 && thirdDealerTotal > thirdTotal) {
-                alert("Dealer Wins")
-                losses++
-                console.log(losses)
-                playerWin = false;
-            } else if (initialTotal === secondDealerTotal) {
-                alert("It's a Tie!")
-                tie++
-                console.log(tie);
-            } else if (secondTotal === secondDealerTotal) {
-                alert("It's a Tie!")
-                tie++
-                console.log(tie);
-            } else if (secondDealerTotal > initialTotal) {
-                alert("Dealer Wins")
-                losses++
-                console.log(losses);
-            } else if (thirdTotal === secondTotal) {
-                alert("It's a tie!")
-                tie++
-                console.log(tie);
-            } else if (initialTotal < initialDealerTotal) {
-                alert("Dealer Wins!")
-                losses++
-                console.log(losses);
-            } else if (initialTotal < initialDealerTotal) {
-                alert("Dealer Wins!")
-                losses++
-                console.log(losses);
-            } else if (secondTotal === initialDealerTotal) {
-                alert("It's a tie!")
-                tie++
-                console.log(tie);
-            }
+                if (secondDealerTotal > secondTotal && secondDealerTotal > thirdTotal && secondDealerTotal < 21) {
+                    alert("Dealer Wins!");
+                    console.log("HELLO")
+                } else if (initialTotal < initialDealerTotal && initialDealerTotal < 21) {
+                    alert("Dealer Wins!")
+                    losses++
+                    console.log(losses);
+                } else if (initialTotal < initialDealerTotal) {
+                    losses++
+                    console.log(losses);
+                    playerWin = false;
+                } else if (initialTotal > secondDealerTotal && initialTotal > thirdDealerTotal) {
+                    alert("Player Wins");
+                    wins++
+                    console.log(wins)
+                    playerWin = true;
+                } else if ((initialTotal > initialDealerTotal) && (initialTotal > secondDealerTotal)) {
+                    alert("Player Wins");
+                    wins++
+                    console.log(wins)
+                } else if (initialTotal === secondDealerTotal) {
+                    alert("It's a Tie!")
+                    tie++
+                    console.log(tie);
+                } else if (secondTotal === secondDealerTotal) {
+                    playerWin = true;
+                } else if ((secondTotal > secondDealerTotal) && secondTotal > thirdDealerTotal) {
+                    alert("Player Wins")
+                    wins++
+                    console.log(wins)
+                    playerWin = true;
+                } else if (thirdDealerTotal < 21 && thirdDealerTotal > thirdTotal) {
+                    alert("Dealer Wins")
+                    losses++
+                    console.log(losses)
+                    playerWin = false;
+                    alert("It's a Tie!")
+                    tie++
+                    console.log(tie);
+                } else if (secondDealerTotal > initialTotal && secondDealerTotal < 21) {
+                    alert("Dealer Wins")
+                    losses++
+                    console.log(losses);
+                } else if (thirdTotal === secondTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie);
+                    alert("Dealer Wins!")
+                    losses++
+                    console.log(losses);
+                } else if (secondTotal === initialDealerTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie);
+                } else if (initialTotal === secondDealerTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie);
+                } else if (thirdDealerTotal > 21) {
+                    alert("Player Wins")
+                    wins++
+                    console.log(wins)
+                    playerWin = true;
+                } else if (initialTotal === secondDealerTotal) {
+                    alert("It's a tie!")
+                    tie++
+                    console.log(tie)
+                } else if (secondDealerTotal > initialTotal) {
+                    alert("Dealer wins!")
+                    losses++
+                    console.log(losses)
+                }
 
-            bankRollDifference();
-        }
-        //Dealer Hand Logic for Dealing of Cards.  Will Get Dealt Until it is 17 At least
+                bankRollDifference();
+            }
+            //Dealer Hand Logic for Dealing of Cards.  Will Get Dealt Until it is 17 At least
         if (compHand.length === 0) {
             var $computerHandDiv = $('#compHand')
             var $computerHandImgOne = $('<img>').appendTo($computerHandDiv);
@@ -311,15 +343,29 @@ var deal = function deal() {
             console.log("where am i")
             compareHand();
         }
-        $('#new').on('click',function(){
-        	var userShuffled=[];
-        	var compShuffled=[];
-        })
+        var $computerHandDiv = $('#compHand')
+        $('#new').on('click', function() {
+            console.log("new hand?")
+            $playerHandDiv.empty();
+            $computerHandDiv.empty();
+            // var inputValue = $betInput.val()
+            // inputValue=""
+            userHand = [];
+            compHand = [];
+            userShuffled.length = 0
+            compShuffled.length = 0
 
+        })
+        var displayer = function displayer() {
+
+            $winDisplayer = $('#win-Display').append(wins);
+
+        }
+        displayer();
 
         //Reloads Page when user hits new Hand
-        $('#restart').on('click',function(){
-        	location.reload()	
+        $('#restart').on('click', function() {
+            location.reload()
         })
 
     })
@@ -327,17 +373,6 @@ var deal = function deal() {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 console.log("hello cat");
